@@ -1,0 +1,551 @@
+# Doxyfile 1.5.4
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = librsb
+PROJECT_NUMBER=$(DOXYGEN_PROJECT_NUMBER)
+OUTPUT_DIRECTORY       = ./
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       = "The $name class" \
+                         "The $name widget" \
+                         "The $name file" \
+                         is \
+                         provides \
+                         specifies \
+                         contains \
+                         represents \
+                         a \
+                         an \
+                         the
+ALWAYS_DETAILED_SEC    = NO
+INLINE_INHERITED_MEMB  = NO
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        = ..
+STRIP_FROM_INC_PATH    = 
+SHORT_NAMES            = NO
+JAVADOC_AUTOBRIEF      = NO
+QT_AUTOBRIEF           = NO
+MULTILINE_CPP_IS_BRIEF = NO
+#DETAILS_AT_TOP         = NO
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = NO
+TAB_SIZE               = 8
+#ALIASES                += "\librsb=librsb"
+ALIASES                += "rsbmtxpmessage=On success, a valid pointer (\c struct \c rsb_mtx_t*) to the newly allocated matrix structure; on error, \c NULL."
+ALIASES                += "rsbmtxpmessage_bg=On success, a valid pointer to the inner matrix structure (\c struct \c rsb_mtx_t*); on error, \c NULL."
+ALIASES                += "rsb_BLAS_get_mtx_msg=Given a valid Sparse BLAS handle, returns a pointer to the inner rsb_mtx_t structure. Then, this can be used for many of the \ref rsb.h functions. This is an experimental function, so we recommend to use it with functions not modifying the matrix (ones that take \c const \c struct \c rsb_mtx_t*mtxAp). You can use this function from either Fortran or C."
+ALIASES                += "rsb_BLAS_get_mtx_msg_todo="
+ALIASES                += "rsb_BLAS_get_mtx_msg_note=\rsb_spblasl2e_ext_msg"
+ALIASES                += "rsb_BLAS_get_mtx_msg_warn="
+ALIASES                += "rsb_BLAS_get_mtx_example=An example using Fortran: \n \code \n ...  \n USE blas_sparse \n USE rsb \n IMPLICIT NONE \n TYPE(C_PTR),TARGET :: mtxAp = C_NULL_PTR ! matrix pointer \n INTEGER :: A ! blas_sparse_matrix handle \n INTEGER, TARGET :: istat = 0 \n ... ! begin, populate and finalize A, e.g. using BLAS_duscr_begin, BLAS_duscr_insert_entries, BLAS_uscr_end\n ! get pointer to rsb structure: \n mtxAp = rsb_blas_get_mtx(A) \n ! Now one can use it with any rsb.h/rsb.F90 function, e.g.: \n istat = rsb_file_mtx_save(mtxAp, C_NULL_PTR) ! write to stdout \n \endcode "
+ALIASES                += "rsbmtxapmessage=Pointer to a \c rsb_mtx_t  matrix structure in assembly state, or \c NULL (on error)."
+#ALIASES                += "rsberrorcodestr=A const string pointer to a textual description of the specified error code (see \ref rsb_doc_error_handling)." 
+#ALIASES                += "rsberrcodemsg=#RSB_ERR_NO_ERROR on correct operation, an error code (see \ref rsb_doc_error_handling) otherwise." 
+ALIASES                += "rsberrcodemsg=#RSB_ERR_NO_ERROR on correct operation, an error code otherwise. You can use #rsb_strerror_r() or #rsb_perror() to get more information about the error." 
+ALIASES                += "rsb_va_ia_ja_decl=VA,IA,JA"
+ALIASES                += "rsb_va_rp_ja_decl=VA,RP,JA"
+ALIASES                += "rsb_rw_va_ia_ja_desc_msg=VA,IA,JA Input/output numerical values array (\c VA); row (\c IA) and column (\c JA) indices arrays." 
+ALIASES                += "rsb_ro_va_ia_ja_desc_msg=VA,IA,JA Input numerical values (\c VA) array; row (\c IA) and column (\c JA) input indices arrays." 
+ALIASES                += "rsb_wr_va_ia_ja_desc_msg=VA,IA,JA Output numerical values (\c VA) array; output row (\c IA) and column (\c JA) indices arrays." 
+ALIASES                += "rsb_wr_va_rd_ia_ja_desc_msg=VA,IA,JA Output numerical values (\c VA) array; input row (\c IA) and column (\c JA) indices arrays." 
+ALIASES                += "rsb_wr_va_ia_ja_p_desc_msg=VAp,IAp,JAp Output numerical values (\c VAp) array pointer; output row (\c IAp) and column (\c JAp) indices arrays pointers." 
+ALIASES                += "rsb_wo_va_rp_ja_desc_msg=\rsb_va_rp_ja_decl Output numerical values (\c VA) array, compressed row indices (\c RP) and column indices (\c JA) arrays." 
+ALIASES                += "rsb_wr_va_rp_ja_desc_msg=\rsb_va_rp_ja_decl Input numerical values (\c VA) array; compressed rows (\c RP) and column (\c JA) input indices arrays. Will not be freed by #rsb_mtx_free()." 
+ALIASES                += "rsb_ro_va_rp_ja_desc_msg=\rsb_va_rp_ja_decl Input numerical values (\c VA) array; compressed rows (\c RP) and column (\c JA) input indices arrays." 
+ALIASES                += "rsb_ro_va_ia_cp_desc_msg=VA,IA,CP Input numerical values (\c VA) array, input row indices (\c IA) and compressed column (\c CP) indices arrays." 
+ALIASES                += "rsb_wr_ia_ja_desc_msg=IA,JA output row (\c IA) and column (\c JA) indices arrays." 
+ALIASES                += "rsb_inp_rnz_msg=rnzp A pointer where the number of relevant nonzero elements will be written to." 
+ALIASES                += "rsb_errval_inp_param_msg=errval A valid error flag value (see #rsb_err_t)." 
+ALIASES                += "rsb_buf_inp_param_msg=buf A valid string buffer pointer where to write to." 
+ALIASES                += "rsb_buflen_inp_param_msg=buflen The string buffer length." 
+ALIASES                += "rsb_inp_frlr_msg=frA,lrA First and last row indices." 
+ALIASES                += "rsb_inp_fclc_msg=fcA,lcA First and last column indices." 
+ALIASES                += "rsb_mtx_getinfo_msg=Returns a specified matrix (numerical) property " 
+ALIASES                += "rsb_io_str_msg=iop A pointer to a #rsb_initopts  structure with library options. It may be \c NULL  (or better, #RSB_NULL_INIT_OPTIONS/#RSB_NULL_EXIT_OPTIONS) for specifying default options." 
+ALIASES                += "rsb_io_str_msg_opnp=opnp A pointer to a library option input name string (may not be \c NULL)." 
+ALIASES                += "rsb_io_str_msg_opvp=opvp A pointer to a library option input value string (may not be \c NULL)." 
+ALIASES                += "rsb_nnz_inp_param_msg=nnz The number of nonzeroes in the input arrays." 
+ALIASES                += "rsb_nnzA_inp_param_msg=nnzA The number of nonzeroes in the input arrays representing matrix \f$A\f$." 
+ALIASES                += "rsb_nnzA_inp_param_msg_i=nnzA A rough estimate of the number of nonzeroes matrix \f$A\f$ will host (used for optimizing arrays allocation). If you do not know yet, you can specify zero." 
+ALIASES                += "rsb_nrows_inp_param_msg=nr The number of rows." 
+ALIASES                += "rsb_rowmajor_B_inp_param_msg=rowmajorB #RSB_BOOL_TRUE if the dense matrix \f$B\f$ is considered stored as row major, or #RSB_BOOL_FALSE if as column major." 
+ALIASES                += "rsb_rowmajor_C_inp_param_msg=rowmajorC #RSB_BOOL_TRUE if the dense matrix \f$C\f$ is considered stored as row major, or #RSB_BOOL_FALSE if as column major." 
+ALIASES                += "rsb_ncols_inp_param_msg=nc The number of columns." 
+ALIASES                += "rsb_nrcowsp_inp_param_msg=nrp,ncp Output pointers to rows and columns count variables (can be \c NULL)." 
+ALIASES                += "rsb_nnzp_inp_param_msg=nzp Output pointer to the nonzeroes count variable (can be \c NULL)." 
+ALIASES                += "rsb_nrbows_A_sparse_inp_param_msg=brA,bcA 	Blocking parameters: \c brA  should be set to 1 or #RSB_DEFAULT_ROW_BLOCKING  (currently unused, reserved for future use);  \c bcA should be set to 1 or #RSB_DEFAULT_ROW_BLOCKING  (currently unused, reserved for future use)."
+#ALIASES                += "rsb_nrbows_sparse_inp_param_msg=brA,bcA 	\c brA  Should be set to 1 or #RSB_DEFAULT_ROW_BLOCKING (reserved for future use).  \c bcA Should be set to 1 or #RSB_DEFAULT_ROW_BLOCKING (reserved for future use)."
+ALIASES                += "rsb_nrcows_A_sparse_inp_param_msg=\rsb_nrA,\rsb_ncA The number of rows and columns of the sparse matrix \f$A\f$." 
+ALIASES                += "rsb_nrcows_B_dense_inp_param_msg=nrB,ncB The number of rows and columns for the dense matrix \f$B\f$." 
+ALIASES                += "rsb_nrcows_C_dense_inp_param_msg=nrC,ncC The number of rows and columns for the dense matrix \f$C\f$." 
+ALIASES                += "rsb_miflags_inp_param_msg=miflags A valid value of matrix info flags (see #rsb_mif_t for valid values)." 
+ALIASES                += "rsb_minfop_inp_param_msg=minfop Pointer to a variable of the right type, according to the matrix info flag specification (see #rsb_mif_t)." 
+ALIASES                += "rsb_flags_inp_param_msg=\rsb_flags A valid combination of matrix storage flags (see \ref flags_section flags section)." 
+ALIASES                += "rsb_flags_getv_inp_param_msg=\rsb_flags Either #RSB_FLAG_FORTRAN_INDICES_INTERFACE or #RSB_FLAG_C_INDICES_INTERFACE		 (see \ref flags_section flags section)." 
+ALIASES                += "rsb_flags_setv_inp_param_msg=\rsb_flags Either #RSB_FLAG_FORTRAN_INDICES_INTERFACE or #RSB_FLAG_C_INDICES_INTERFACE plus either #RSB_FLAG_DUPLICATES_SUM (to sum into) or #RSB_FLAG_DUPLICATES_KEEP_LAST (to overwrite entries) (see \ref flags_section flags section)."
+ALIASES                += "rsb_flags_getcb_inp_param_msg=\rsb_flags_getv_inp_param_msg"
+ALIASES                += "rsb_flags_getrs_inp_param_msg=\rsb_flags_getv_inp_param_msg"
+ALIASES                += "rsb_flags_getcs_inp_param_msg=\rsb_flags_getv_inp_param_msg"
+ALIASES                += "rsb_flags_getco_inp_param_msg=\rsb_flags_getv_inp_param_msg"
+ALIASES                += "rsb_flags_swcoo_inp_param_msg=\rsb_flags A combination of #RSB_FLAG_C_INDICES_INTERFACE, #RSB_FLAG_FORTRAN_INDICES_INTERFACE, #RSB_FLAG_FORTRAN_INDICES_INTERFACE. (see \ref flags_section flags section)." 
+ALIASES                += "rsb_flagsa_inp_param_msg=\rsb_flagsA A valid combination of matrix storage flags." 
+ALIASES                += "rsb_flags_elop_param_msg=elop_flags Elemental operation specification flags (see #rsb_elopf_t for valid choices)." 
+ALIASES                += "rsb_flags_stru_fla_msg=\rsb_flags Either #RSB_FLAG_IDENTICAL_FLAGS or a combination of other flags, e.g.: #RSB_FLAG_C_INDICES_INTERFACE, #RSB_FLAG_SYMMETRIC, #RSB_FLAG_HERMITIAN, #RSB_FLAG_TRIANGULAR, #RSB_FLAG_UPPER, #RSB_FLAG_LOWER, #RSB_FLAG_UNIT_DIAG_IMPLICIT, #RSB_FLAG_DISCARD_ZEROS. Flag #RSB_FLAG_EXTERNALLY_ALLOCATED_ARRAYS is forbidden. Flag #RSB_FLAG_FORTRAN_INDICES_INTERFACE is ignored." 
+ALIASES                += "rsb_transa_mtx_msg=\f$opa( A )=A\f$ if \c transA=#RSB_TRANSPOSITION_N; \n \f$opa( A )= A ^T\f$ if \c transA=#RSB_TRANSPOSITION_T; \f$opa( A )= A ^H\f$ if \c transA=#RSB_TRANSPOSITION_C;"
+ALIASES                += "rsb_num_threads=If \c --enable-rsb-num-threads  has been specified at configure time, the \c RSB_NUM_THREADS  environment variable will override the number of executing threads specified by \c OMP_NUM_THREADS. (See also #RSB_IO_WANT_EXECUTING_THREADS)."
+ALIASES                += "rsb_transb_mtx_msg=\f$opb( B )=B\f$ if \c transB=#RSB_TRANSPOSITION_N; \n \f$opb( B )= B ^T\f$ if \c transB=#RSB_TRANSPOSITION_T; \f$opb( B )= B ^H\f$ if \c transB=#RSB_TRANSPOSITION_C;"
+ALIASES                += "rsb_transt_mtx_msg=\f$opt( T )=T\f$ if \c transT=#RSB_TRANSPOSITION_N; \n \f$opt( T )= T ^T\f$ if \c transT=#RSB_TRANSPOSITION_T; \f$opt( T )= T ^H\f$ if \c transT=#RSB_TRANSPOSITION_C;"
+#ALIASES                += "rsb_flags_idc_param_msg=\rsb_flags A valid combination of index conversion flags (that is, #RSB_FLAG_NOFLAGS and #RSB_FLAG_FORTRAN_INDICES_INTERFACE)." 
+ALIASES                += "rsb_flags_idc_param_msg=\rsb_flags A valid combination of index conversion flags (that is, #RSB_FLAG_C_INDICES_INTERFACE and #RSB_FLAG_FORTRAN_INDICES_INTERFACE) and other meaningful flags. Symmetry flags shall be the same as in the matrix in use, because symmetry expansion may happen otherwise." 
+ALIASES                += "rsb_flagsp_inp_param_msg=flagsp Output pointer to the detected structural flags variable. Will be a combination of #RSB_FLAG_LOWER, #RSB_FLAG_UPPER, #RSB_FLAG_SYMMETRIC, #RSB_FLAG_HERMITIAN." 
+ALIASES                += "rsb_flagsa_coc_param_msg=\rsb_flagsA A valid combination of index conversion and matrix storage flags and other meaningful flags.\n The encouraged base choice here is #RSB_FLAG_DEFAULT_RSB_MATRIX_FLAGS. If Fortran (1 based) indices are being used for the IA, JA arrays, then the #RSB_FLAG_FORTRAN_INDICES_INTERFACE flag should be added. If symmetric storage is desired, then #RSB_FLAG_SYMMETRIC (or #RSB_FLAG_HERMITIAN, for Hermitian matrices) is necessary, in combination with either #RSB_FLAG_LOWER or #RSB_FLAG_UPPER. If you intend to use this matrix for triangular solution (e.g.: #rsb_spsv()/#rsb_spsm()), it needs to be triangular and specified with either #RSB_FLAG_LOWER_TRIANGULAR or #RSB_FLAG_UPPER_TRIANGULAR, and not have #RSB_FLAG_LOWER_SYMMETRIC or #RSB_FLAG_LOWER_HERMITIAN. Nonzeroes non complying with the specified flags will be ignored. If #RSB_FLAG_UNIT_DIAG_IMPLICIT is present, diagonal entries will be not represented but assumed to be unitary. If #RSB_FLAG_DUPLICATES_SUM is present, duplicate entries will be summed together. If #RSB_FLAG_DISCARD_ZEROS is present, zeroes will be discarded." 
+ALIASES                += "rsb_flagsa_coi_param_msg=\rsb_flagsa_coc_param_msg" 
+ALIASES                += "rsb_flagsa_csc_param_msg=\rsb_flagsa_coc_param_msg" 
+ALIASES                += "rsb_flagsa_csr_param_msg=\rsb_flagsa_coc_param_msg" 
+ALIASES                += "rsb_xren_inp_param_msg=IREN,JREN Renumbering arrays for \c IA and \c JA (respectively rows count and columns count sized). If \c NULL, no renumbering will be used." 
+ALIASES                += "rsb_errvp_inp_param_msg=errvalp An optional (can be \c NULL) pointer to #rsb_err_t  where the error status will be written to." 
+ALIASES                += "rsb_yvlp_param_msg=yvlp An optional pointer (can be \c NULL). If supplied, vector length will be written here, and no vector will be read." 
+ALIASES                += "rsb_yvl_param_msg=yvl Output vector length." 
+ALIASES                += "rsb_VA_can_null_msg=VA can be \c NULL "
+ALIASES                += "rsb_IA_can_null_msg=IA can be \c NULL "
+#ALIASES                += "rsb_brows_inp_param_msg=br Should be set to 1 or #RSB_DEFAULT_ROW_BLOCKING (reserved for future use)." 
+#ALIASES                += "rsb_bcols_inp_param_msg=bc Should be set to 1 or #RSB_DEFAULT_COL_BLOCKING (reserved for future use)." 
+ALIASES                += "rsb_brptr_inp_param_msg=..." 
+ALIASES                += "rsb_bcptr_inp_param_msg=..." 
+ALIASES                += "rsb_type_param_msg=typecode A valid type code for the given (numerical array) input pointer (see \ref matrix_type_symbols_section)." 
+ALIASES                += "rsb_type_o_param_msg=typecode A valid type code for the desired output matrix (see \ref matrix_type_symbols_section)." 
+ALIASES                += "rsb_psb_trans_inp_param_msg=psbtrans   Transposition parameter value valid in the PSBLAS library." 
+ALIASES                += "rsb_trans_inp_param_msg=trans   Transposition parameter (see \ref matrix_transposition_flags_section)." 
+ALIASES                += "rsb_transa_inp_param_msg=transA Transposition parameter for \f$A\f$ (see \ref matrix_transposition_flags_section)." 
+ALIASES                += "rsb_transb_inp_param_msg=transB Transposition parameter for \f$B\f$ (see \ref matrix_transposition_flags_section)." 
+ALIASES                += "rsb_transc_inp_param_msg=transC Transposition parameter for \f$C\f$ (see \ref matrix_transposition_flags_section)." 
+ALIASES                += "rsb_transt_inp_param_msg=transT Transposition parameter for \f$T\f$ (see \ref matrix_transposition_flags_section)." 
+ALIASES                += "rsb_alpha_inp_param_msg=alphap Optional pointer (if \c NULL, will default to 1) to a numerical value (of the same type as matrix)." 
+ALIASES                += "rsb_exp_inp_param_msg=exp The power."
+ALIASES                += "rsb_omega_inp_param_msg=omegap Pointer to a numerical location(s) (of the same type as matrix)." 
+ALIASES                += "rsb_alpha_s_inp_param_msg=alphap Optional pointer (if \c NULL, will default to 1) to a numerical value for scaling the output."
+ALIASES                += "rsb_beta_inp_param_msg=betap Optional pointer (if \c NULL, will default to 1) to a numerical value." 
+ALIASES                += "rsb_c_inp_param_msg=Cp The output vector array." 
+ALIASES                += "rsb_c_tune_inp_param_msg=\rsb_c_inp_param_msg If \c NULL, a temporary, internally allocated copy will be used." 
+ALIASES                += "rsb_x1x2_inp_param_msg=x1p,x2p Right hand side vector arrays pointers." 
+ALIASES                += "rsb_y1y2_inp_param_msg=y1p,y2p Output vector arrays pointers." 
+ALIASES                += "rsb_b_inp_param_msg=Bp The input vector array." 
+ALIASES                += "rsb_b_tune_inp_param_msg=\rsb_b_inp_param_msg If \c NULL, a temporary, internally allocated copy will be used." 
+ALIASES                += "rsb_y_out_param_msg=Yp The output array vector." 
+ALIASES                += "rsb_y_inp_param_msg=Yp The input  array vector." 
+ALIASES                += "rsb_d_inp_param_msg=Dp A valid pointer to a numerical vector array \f$D\f$." 
+ALIASES                += "rsb_diagonal_inp_param_msg=diagonalvp is an array sized like min (rows,columns) of the same type of the matrix." 
+ALIASES                += "rsb_x_inp_param_msg=Xp The input vector array." 
+ALIASES                += "rsb_incx_inp_param_msg=incX Spacing of vector elements in each input vector array (>=1)." 
+ALIASES                += "rsb_incy_inp_param_msg=incY Spacing of vector elements in each output vector array (>=1)." 
+#ALIASES                += "rsb_lda_inp_param_msg=ldA Leading dimension of Ap." 
+ALIASES                += "rsb_ldb_inp_param_msg=ldB Leading dimension of \c Bp array." 
+ALIASES                += "rsb_ldc_inp_param_msg=ldC Leading dimension of \c Cp array." 
+ALIASES                += "rsb_filename_inp_param_msg=filename The specified matrix file name (cannot be \c NULL)." 
+ALIASES                += "rsb_filename_inv_param_msg=filename The specified vector file name (cannot be \c NULL)." 
+ALIASES                += "rsb_filename_out_param_msg=filename The specified output file name (if \c NULL, will write to standard output)." 
+ALIASES                += "rsb_order_inp_param_msg=order A flag among #RSB_FLAG_WANT_COLUMN_MAJOR_ORDER and #RSB_FLAG_WANT_ROW_MAJOR_ORDER. For contiguous vector arrays, you probably want #RSB_FLAG_WANT_COLUMN_MAJOR_ORDER." 
+ALIASES                += "rsb_nrhs_inp_param_msg=nrhs The number of right hand side vectors (cannot be \c <1)." 
+ALIASES                += "rsb_dmtx_abi_param_msg_b=Bp Array representing the dense matrix \f$B\f$." 
+ALIASES                += "rsb_dmtx_abi_param_msg_c=Cp Array representing the dense matrix \f$C\f$." 
+ALIASES                += "rsb_mtxt_abi_param_msg=mtxAp A valid \c rsb_mtx_t pointer to the matrix." 
+ALIASES                += "rsb_mtxt_abi_param_msg_a=mtxAp Valid \c rsb_mtx_t pointer to matrix \f$A\f$ representation." 
+ALIASES                += "rsb_mtxt_abi_param_msg_b=mtxBp Valid \c rsb_mtx_t pointer to matrix \f$B\f$ representation." 
+ALIASES                += "rsb_mtxt_inp_param_msg_a=mtxAp Valid \c rsb_mtx_t pointer to matrix \f$A\f$ representation." 
+ALIASES                += "rsb_mtxt_inp_param_msg_i=mtxApp \c rsb_mtx_t pointer to an unassembled matrix address." 
+ALIASES                += "rsb_mtxt_inp_param_msg_b=mtxBp Valid \c rsb_mtx_t pointer to matrix \f$B\f$ representation." 
+ALIASES                += "rsb_mtxt_inp_param_msg_t=mtxTp Valid \c rsb_mtx_t pointer to matrix \f$T\f$ representation. The matrix must be triangular; that is, it must have been allocated with either #RSB_FLAG_LOWER_TRIANGULAR or #RSB_FLAG_UPPER_TRIANGULAR flags." 
+ALIASES                += "rsb_mtxtpp_inp_param_msg_b=mtxBpp Valid \c rsb_mtx_t pointer to an address for matrix \f$B\f$." 
+ALIASES                += "rsb_mtxt_inp_param_msg=mtxAp A valid const matrix pointer." 
+#ALIASES                += "rsb_mtxt_iou_param_msg=mtxAp A valid matrix pointer of type (\c rsb_mtx_t*)." 
+ALIASES                += "rsb_mtxtp_iou_param_msg=mtxAp A valid matrix pointer pointer (\c rsb_mtx_t**)." 
+ALIASES                += "rsb_mtxtpa_iou_param_msg=mtxBpp A valid pointer to the matrix to assign to." 
+# Rendering specific messages:
+ALIASES                += "rsb_render_rflags_inp_param_msg=rflags	The color mode; only #RSB_MARF_RGB is supported for now (1 byte per channel, 3 channels --- red, green, blue): this requires array \c pmp to be at least (3*\c pmlWidth*\c pmHeight) bytes large."
+ALIASES                += "rsb_render_pmlwidth_inp_param_msg=pmlWidth	stride between lines (in pixels; no less than \c pmWidth)."
+ALIASES                += "rsb_render_pmwidth_inp_param_msg=pmWidth 	Pixel map width  (in pixels or points)."
+ALIASES                += "rsb_render_pmheight_inp_param_msg=pmHeight 	Pixel map height (in pixels or points)."
+ALIASES                += "rsb_render_pmp_inp_param_msg=pmp		Pixel map array pointer."
+# Autotuning specific messages:
+ALIASES                += "rsb_tune__doc_msg=The tuner works by evaluating different instances and working threads variants.  The instance leading to faster operation time will be retained and given back to the user in \c *mtxOpp.  If \c nrhs==1 and \c order==#RSB_FLAG_WANT_COLUMN_MAJOR_ORDER, unitary stride vectors are assumed.  In case of error, the original input matrix shall be unaffected.  It is possible to specify the leading dimensions of \c Bp,Cp implicitly, with  \c ldB=0  and \c ldC=0: in this case, their values will be computed internally and if \c Bp!=NULL,Cp!=NULL, they will be assumed of being sufficiently sized.  Values of \c nrhs<1 will be treated as 1.  \c Bp, \c Cp can be \c NULL: temporary vectors will be allocated, used, and deallocated within the tuner. If \c mtxOpp=NULL and \c *tnp!=NULL the best thread count will be probed for the matrix given in \c mtxAp. Please note that if threads only tuning is requested and matrix has too few leaves (see #RSB_MIF_LEAVES_COUNT__TO__RSB_BLK_INDEX_T), tuning will not work. If \c mtxAp==NULL, then the \c *mtxOpp instance will be used; however in this case, if a better instance is found, the original will be destroyed as with #rsb_mtx_free(). The case \c mtxAp!=NULL&&*mtxOpp!=NULL is illegal and will cause an error."
+ALIASES                += "rsb_tune_mtxOpp_iou_param_msg=mtxOpp		Optimal matrix structure pointer will be assigned to \c *mtxOpp (it may occur that *mtxOpp==mtxAp on output). If \c mtxOpp  is \c NULL then no data structure optimization will be attempted; rather, only optimal threads search will occur (\c tnp must be not \c NULL  then)."
+ALIASES                += "rsb_tune_sfp_iou_param_msg=sfp		Achieved speedup factor will be written to \c *sfp  (unless \c sfp==NULL)."
+ALIASES                += "rsb_tune_tnp_iou_param_msg=tnp		If \c tnp==NULL on input, the current thread count will be utilized. Otherwise, if \c *tnp>0, then *tnp will be used as first suggestion in optimal thread count searching. If \c tnp!=NULL ,on output \c *tnp  will be set to contain the optimal number of threads. Then, the user is expected to set this number of threads using e.g.: \c RSB_REINIT_SINGLE_VALUE_SET(RSB_IO_WANT_EXECUTING_THREADS,tnp,errval). Please note that this will affect the whole library operation, not only this matrix."
+ALIASES                += "rsb_tune_maxr_iou_param_msg=maxr		Optimizer rounds max count. If \c <1, will be treated as 1; if 0 will be decided automatically. Max is #RSB_CONST_MAX_TUNING_ROUNDS."
+ALIASES                += "rsb_tune_maxt_iou_param_msg=maxt		Maximum time (in seconds) per optimization round (does not take in account conversion time). If \c maxt<0.0 is provided, \c -ceil(maxt) will be interpreted as number of iterations to check for each operation time sample. If \c maxt==0.0 is provided, a default choice will be made instead."
+# Sparse BLAS specific messages:
+ALIASES                += "rsb_spblas_istat_msg=\param istat  If non \c NULL, \c *istat will be set to the return code, either 0 (success) or -1 (failure).  \return This is a subroutine for Fortran, so it does not return any value.\n" 
+ALIASES                += "rsb_spblas_f_istat_msg=\param istat  The return code will be written to \c istat (this is a Fortran routine): either 0 (success) or -1 (failure).\n"
+ALIASES                += "rsb_spblas_return_msg=\return On success, 0 is returned; on error, -1. " 
+ALIASES                += "rsb_spblas_return_mtx_msg=\return A matrix handle in case of success, or -1 on error. " 
+ALIASES                += "rsb_spblas_set_mtx_msg=Will assign a valid matrix handle to \f$A\f$ in case of success, or set it to -1 on error." 
+ALIASES                += "rsb_tune_warning_doc_msg=This function is still experimental.  In case of error, although the matrix shall be unaffected, the library status may be affected (e.g.: execution thread count, default matrix subdivision)."
+ALIASES                += "rsb_tune_todo_doc_msg=In the future, autotuning functionality shall improve considerably. Need support for lightweight, threads-only optimization.  May support strided vectors in the future."
+# Sparse L1 BLAS specific messages:
+#ALIASES                += "rsb_spblasl1_msg=Sparse BLAS Level 1 is not implemented (but soon will be supported, unoptimized), so this implementation is only a stub." 
+ALIASES                += "rsb_spblasl1_common_parms_msg=\param y Array for \f$Y\f$ vector. \param x Array for \f$X\f$ vector. \param nnz Size of \f$X\f$\a and \a \f$Y\f$ vectors.  \param indx Is the array of indices at which sparse vector \f$X\f$ will be accessed. \param index_base Specifies the contents of \c indx, either #blas_one_base or #blas_one_base. \param incy The distance between consecutive \c y array elements." 
+ALIASES                += "rsb_spblasl1_msg=Sparse BLAS Level 1 has been implemented and is working, although not with performance in mind."
+ALIASES                += "rsb_spblasl1_axpy_msg=Sparse vector update:  \f$Y \leftarrow \alpha X + Y\f$. \rsb_spblasl1_common_parms_msg \param alpha Will scale values of \f$X\f$ before accumulating to \f$Y\f$." 
+ALIASES                += "rsb_spblasl1_dot_msg=Sparse dot product.  \f$r \leftarrow X^T Y,\f$ \f$r \leftarrow X^H Y\f$ \param r Sparse dot result array. \rsb_spblasl1_common_parms_msg \param conj If #blas_conj, values of X will be considered conjugated." 
+ALIASES                += "rsb_spblasl1_ga_msg=Sparse gather.  \f$X \leftarrow Y |_x\f$. \rsb_spblasl1_common_parms_msg." 
+ALIASES                += "rsb_spblasl1_gz_msg=Sparse gather  and zero.  \f$X \leftarrow Y |_x;Y|_x\leftarrow 0\f$. \rsb_spblasl1_common_parms_msg." 
+ALIASES                += "rsb_spblasl1_sc_msg=Sparse scatter:  \f$Y |_x\leftarrow X\f$. \rsb_spblasl1_common_parms_msg."
+# Sparse L2 BLAS specific messages:
+ALIASES                += "rsb_spblasl2_Ap_msg=\param A A valid pointer to an empty matrix handle." 
+ALIASES                += "rsb_spblasl2_A_msg=\param A A valid matrix handle." 
+ALIASES                += "rsb_spblasl2_A_msg_ftn=\param A On success, a valid matrix handle will be written to A. \todo Shall make \c A \c intent(inout) as well. " 
+ALIASES                += "rsb_spblasl2_T_msg=\param T A valid triangular matrix handle." 
+ALIASES                += "rsb_spblasl2_val_msg=\param val Array of values." 
+ALIASES                += "rsb_spblasl2_order_msg=\param order layour of the dense array." 
+ALIASES                += "rsb_spblasl2_transa_msg=\param transA Transposition operator for matrix \a A." 
+ALIASES                += "rsb_spblasl2_transt_msg=\param transT Transposition operator for matrix \a T." 
+ALIASES                += "rsb_spblasl2_b_msg=\param b Dense vector \a b." 
+ALIASES                += "rsb_spblasl2_c_msg=\param c Dense vector \a c." 
+ALIASES                += "rsb_spblasl2_x_msg=\param x Dense vector \a x." 
+ALIASES                += "rsb_spblasl2_y_msg=\param y Dense vector \a y." 
+ALIASES                += "rsb_spblasl2_ldb_msg=\param ldb Leading dimension of \a b." 
+ALIASES                += "rsb_spblasl2_ldc_msg=\param ldc Leading dimension of \a c." 
+ALIASES                += "rsb_spblasl2_incx_msg=\param incx Stride of \a x." 
+ALIASES                += "rsb_spblasl2_incy_msg=\param incy Stride of \a y." 
+ALIASES                += "rsb_spblasl2_nrhs_msg=\param nrhs Number of right hand side columns." 
+ALIASES                += "rsb_spblasl2_alpha_msg=\param alpha Value for \f$ \alpha \f$." 
+ALIASES                += "rsb_spblasl2_nnz_ti_msg=\param nnz Number of nonzeroes to insert." 
+ALIASES                += "rsb_spblasl2_mn_msg=\param m Is the count of rows. \param n Is the count of columns." 
+ALIASES                += "rsb_spblasl2_MN_msg=\param Mb Block rows count. \param Nb Block columns count. " 
+ALIASES                += "rsb_spblasl2_cr_begin_msg=Allocates an empty matrix (A) and leaves it in build state. \rsb_spblasl2_mn_msg" 
+ALIASES                += "rsb_spblasl2_usmx_list=#BLAS_dusmv, #BLAS_susmv, #BLAS_zusmv, #BLAS_cusmv, #BLAS_dusmm, #BLAS_susmm, #BLAS_zusmm, #BLAS_cusmm"
+ALIASES                += "rsb_spblasl2_atno=\note By setting the \c #blas_rsb_autotune_next_operation property via #BLAS_ussp (at any time) the next multiplication routine call (either of \rsb_spblasl2_usmx_list) will invoke autotuning before carrying out the effective operation. The tuning will take in account parameters like transposition, number of right hand sides, and scaling constants." 
+ALIASES                += "rsb_spblasl2_at_asm=By setting the \c #blas_rsb_spmv_autotuning_on property via #BLAS_ussp, the default number of executing threads for this matrix will be determined once, at matrix assembly time, and employed irrespective of the default threads count (different values for transposed and untrasposed multiply). This can be overridden only by setting the \c RSB_NUM_THREADS environment variable. " 
+ALIASES                += "rsb_spblasl2_at=\note \rsb_spblasl2_atno \rsb_spblasl2_at_asm \see On the topic of autotuning, see also rsb_tune_spmm.\n " 
+ALIASES                += "rsb_spblasl2_cr_block_msg_warn=\note At the moment \librsb  does not implement neither dense blocked technique (BCSR, VBR), so the matrix will be represented as RSB."
+ALIASES                += "rsb_spblasl2_cr_block_msg=Allocates an empty matrix (A) and leaves it in build state. \param k,l Are row and column dimensions when specifying a matrix as BCSR. \rsb_spblasl2_MN_msg" 
+ALIASES                += "rsb_spblasl2_cr_vbr_msg=Allocates an empty matrix (A) and leaves it in build state. \param K,L Are arrays specifying row/column block sizes when specifying a matrix as VBR. \rsb_spblasl2_MN_msg " 
+ALIASES                += "rsb_spblasl2_cr_insert_entry_dup_msg=By default, duplicate entries will be summed together." 
+ALIASES                += "rsb_spblasl2_cr_insert_entry_msg=Inserts an entry in a matrix, assuming it is in build state. \rsb_spblasl2_cr_insert_entry_dup_msg \rsb_spblasl2_A_msg \rsb_spblasl2_val_msg \rsb_spblasl2_val_msg \param i,j Row and column indices." 
+ALIASES                += "rsb_spblasl2_cr_insert_entries_msg=Inserts entries in a matrix, assuming it is in build state. \rsb_spblasl2_cr_insert_entry_dup_msg \rsb_spblasl2_A_msg \rsb_spblasl2_nnz_ti_msg \rsb_spblasl2_val_msg \param indx Row indices array. \param jndx Column indices array." 
+ALIASES                += "rsb_spblasl2_cr_insert_col_msg=Inserts a whole column in a matrix, assuming it is in build state. \rsb_spblasl2_cr_insert_entry_dup_msg \rsb_spblasl2_A_msg \param j Column index. \rsb_spblasl2_nnz_ti_msg \rsb_spblasl2_val_msg \param indx Row indices array." 
+ALIASES                += "rsb_spblasl2_cr_insert_row_msg=Inserts a whole row in a matrix, assuming it is in build state. \rsb_spblasl2_cr_insert_entry_dup_msg \rsb_spblasl2_A_msg \param i Row index. \rsb_spblasl2_nnz_ti_msg \rsb_spblasl2_val_msg \param indx Row index." 
+ALIASES                += "rsb_spblas_correct_msg=This shall be corrected in a future release." 
+ALIASES                += "rsb_BLAS_Xuscr_block_begin=#BLAS_cuscr_block_begin, #BLAS_cuscr_block_begin, #BLAS_duscr_block_begin, #BLAS_zuscr_block_begin"
+ALIASES                += "rsb_BLAS_Xuscr_begin=#BLAS_cuscr_begin, #BLAS_suscr_begin, #BLAS_duscr_begin, #BLAS_zuscr_begin"
+ALIASES                += "rsb_see_BLAS_Xuscr_block_begin=\see \rsb_BLAS_Xuscr_block_begin, \rsb_BLAS_Xuscr_begin"
+ALIASES                += "rsb_spblasl2_cr_insert_block_msg=Inserts a whole block in a matrix, assuming it is in build state. The block size is assumed to be the one specified when calling the (type) corresponding matrix blocked \c begin function. If not called a blocked \c begin function, will assume 1x1 (that is, no) blocking. \rsb_spblasl2_cr_insert_entry_dup_msg \rsb_spblasl2_A_msg \rsb_spblasl2_val_msg \param row_stride,col_stride Row and column strides in accessing \c val. \param i,j Block row/column indices.  \warning Signature of this routine for Fortran does not agree to the standard. \rsb_spblas_correct_msg \rsb_see_BLAS_Xuscr_block_begin." 
+ALIASES                += "rsb_spblasl2_cr_insert_clique_msg=Inserts a whole clique in a matrix, assuming this is in build state. \rsb_spblasl2_cr_insert_entry_dup_msg \rsb_spblasl2_A_msg \param k,l Clique rows and columns count. \rsb_spblasl2_val_msg \param row_stride,col_stride Row/columns stride in accessing the clique. \param indx,jndx Row/column indices arrays.  \warning Signature of this routine for Fortran does not agree to the standard. \rsb_spblas_correct_msg" 
+ALIASES                += "rsb_spblasl2_cr_end_msg=Makes an assembled matrix out of a matrix in build state. After this, it is not possible anymore to insert nonzeroes, but computational routines. \rsb_spblasl2_A_msg" 
+ALIASES                += "rsb_spblasl2_ds_msg=Destroys a matrix. \rsb_spblasl2_A_msg" 
+ALIASES                += "rsb_spblasl2_sp_msg=Set a matrix property. Should be called just after creation, before nonzeroes insertion. \param A A is the matrix to apply the property. \param pname  The desired matrix property. \rsb_spblasl2_pl_msg " 
+ALIASES                += "rsb_spblasl2_pl_msg=For valid matrix properties, see #blas_rsb_ext_type, #blas_uplo_type, #blas_diag_type, #blas_conj_type, #blas_base_type, #blas_symmetry_type, #blas_field_type, #blas_size_type, #blas_sparsity_optimization_type."
+# Discarded: #blas_handle_type, #blas_order_type, #blas_trans_type, #blas_side_type, #blas_cmach_type, #blas_norm_type, #blas_sort_type, #blas_jrot_type, #blas_prec_type
+ALIASES                += "rsb_spblasl2_gp_msg=Get a matrix property. \param A A is the matrix to apply the property. \param pname  The desired matrix property. \rsb_spblasl2_pl_msg"
+ALIASES                += "rsb_spblasl2_mv_msg=Multiply by a dense vector. Either of \f$Y \leftarrow \alpha A   X + Y  ,\f$\n \f$Y \leftarrow \alpha A^T X + Y,\f$\n \f$Y \leftarrow \alpha A^H X + Y\f$, depending on the value of \c transA. \rsb_spblasl2_transa_msg \rsb_spblasl2_alpha_msg \rsb_spblasl2_A_msg \rsb_spblasl2_x_msg \rsb_spblasl2_incx_msg \rsb_spblasl2_y_msg \rsb_spblasl2_incy_msg \note  \rsb_spblasl2_at \rsb_num_threads" 
+ALIASES                += "rsb_spblasl2_sv_msg=Triangular solve, by a dense vector. Either of \f$X \leftarrow \alpha T^{-1}X,\f$ \f$X \leftarrow \alpha T^{-T}X,\f$ \f$X \leftarrow \alpha T^{-H}X\f$, depending on the value of \c transT. \rsb_spblasl2_transt_msg \rsb_spblasl2_alpha_msg \rsb_spblasl2_T_msg \rsb_spblasl2_x_msg \rsb_spblasl2_incx_msg" 
+ALIASES                += "rsb_spblasl2_mm_msg=Multiply by a dense matrix (aka multi-vector). Either of \f$C \leftarrow \alpha AB+C,\f$ \f$C \leftarrow \alpha A^T B+C,\f$ \f$C \leftarrow \alpha A^H B+C\f$, depending on the value of \c transA. \rsb_spblasl2_order_msg \rsb_spblasl2_transa_msg \rsb_spblasl2_nrhs_msg \rsb_spblasl2_A_msg \rsb_spblasl2_alpha_msg \rsb_spblasl2_b_msg \rsb_spblasl2_ldb_msg \rsb_spblasl2_c_msg \rsb_spblasl2_ldc_msg \note   \rsb_spblasl2_at\rsb_num_threads" 
+ALIASES                += "rsb_spblasl2_sm_msg=Triangular solve, by a dense matrix (aka multi-vector). Either of \f$B \leftarrow \alpha T^{-1} B,\f$ \f$B \leftarrow \alpha T^{-T} B,\f$ \f$B \leftarrow \alpha T^{-H} B\f$, depending on the value of \c transT. \rsb_spblasl2_order_msg \rsb_spblasl2_transt_msg \rsb_spblasl2_nrhs_msg \rsb_spblasl2_alpha_msg \rsb_spblasl2_T_msg \rsb_spblasl2_b_msg \rsb_spblasl2_ldb_msg" 
+# Sparse L2 BLAS specific messages (extensions):
+ALIASES                += "rsb_spblasl2e_ext_msg=\note This function is an extension implemented by \librsb and thus it is not part of the standard. Do not rely on it, as it may change! Please contact the library maintainers if you need its functionality." 
+ALIASES                += "rsb_matrixmarketonlynote_v=\note The only dense vector file format currently supported is Matrix Market. E.g.: \verbinclude vf.mtx \n \rsb_matrixmarketonlynote_t" 
+ALIASES                += "rsb_matrixmarketonlynote_m=\note The only sparse matrix file format currently supported is Matrix Market. E.g.: \verbinclude A.mtx \n \rsb_matrixmarketonlynote_t \rsb_matrixmarketonlynote_s" 
+ALIASES                += "rsb_matrixmarketonlynote_t=In the above example header on the first line, you can specify either \c real or \c complex or \c pattern for the numerical type."
+ALIASES                += "rsb_matrixmarketonlynote_s=Either \c general, \c symmetric, \c hermitian  can be specified for the structure. In case of \c pattern  matrices, only coordinate indices will be loaded (saving \c pattern matrices is not yet supported); in case of \c real  matrices, also one coefficient value will be saved/loaded; in the case of \c complex  matrices, both the real and imaginary parts will be saved/loaded in addition to the indices."
+ALIASES                += "rsb_spblasl2e_usget_diag_msg=Get matrix diagonal. \f$d\leftarrow diag(A)\f$. \rsb_spblasl2_A_msg \param d Array for the diagonal entries. \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usrows_scale_msg=Scale rows interval of matrix by specified factor. \rsb_spblasl2_A_msg \param d Rows scaling vector. \param trans Transposition parameter (if transposed will scale columns).  \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usget_rows_sparse_msg=Get sparse rows of matrix. \rsb_spblasl2_A_msg \param VA pointer to values. \param IA Row indices array. \param JA Column indices array. \param nnz Obtained nonzeroes. \param fr first row. \param lr Last row.\n \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usget_rows_nnz_msg=Get \rsb_nnz count of matrix row interval. \rsb_spblasl2_A_msg \param fr First row. \param lr Last row. \param nnzp Pointer to the nonzeroes variable.  \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usget_matrix_nnz_msg=Get \rsb_nnz count of matrix. \rsb_spblasl2_A_msg \param nnz Output value pointer. \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usget_infinity_norm_msg=Get infinity norm of matrix.  \rsb_spblasl2_A_msg \param in Infinity norm pointer. \param trans Transposition parameter.  \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usset_elements_norm_msg=Set individual matrix nonzero coefficients values. The operation is pattern preserving, that is, nonzeroes must already exist. \rsb_spblasl2_A_msg \param ia Row indices array. \param ja Column indices array. \param va Values array. \param nnz Length of the \c ia,ja,va arrays.  \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usset_element_norm_msg=Set a single (existing) matrix nonzero coefficient \f$A_{i,j}\f$. \rsb_spblasl2_A_msg \param i Row index. \param j Column index. \param v Value pointer. \rsb_spblasl2e_ext_msg" 
+ALIASES                += "rsb_spblasl2e_usget_element_norm_msg=Get a single matrix nonzero coefficient \f$A_{i,j}\f$. \rsb_spblasl2_A_msg \param i Row index. \param j Column index. \param v Value pointer.  \rsb_spblasl2e_ext_msg" 
+# end Sparse BLAS specific messages
+ALIASES                += "librsb=\c librsb" 
+ALIASES                += "rsb_nnz=nnz" 
+ALIASES                += "rsb_nnzA=nnzA" 
+ALIASES                += "rsb_nrA=nrA" 
+ALIASES                += "rsb_ncA=ncA" 
+#ALIASES                += "rsb_m=nr" 
+#ALIASES                += "rsb_k=nc" 
+ALIASES                += "rsb_flags=flags" 
+ALIASES                += "rsb_flagsA=flagsA" 
+ALIASES                += "rsb_warn_flags_not_complete_msg=Some structural info contained in the matrix structural flags may be lost in the output data." 
+ALIASES                += "rsb_warn_unimplemented_msg=Not implemented yet. \rsb_give_me_feedback" 
+ALIASES                += "rsb_warn_configuredout_msg=Although this operation is supported, this particular function numerical type has been configured out at build time, so an error code will be returned. \see_readme" 
+ALIASES                += "rsb_warn_unfinished_msg=This function is still unfinished. \rsb_give_me_feedback" 
+ALIASES                += "rsb_warn_unfinished_noerr_msg=This function does not handle errors consistently!" 
+ALIASES                += "rsb_warn_errors_fatal=Failures here could be FATAL!" 
+ALIASES                += "rsb_warn_unfinished_doc_msg=Documentation for this function is incomplete!" 
+ALIASES                += "rsb_warn_unfinished_flags_doc_msg=Documentation for this function is incomplete: shall define the supported flags combinations." 
+ALIASES                += "rsb_warn_unfinished_doc_sec_msg=Documentation for this section is to be completed." 
+#ALIASES                += "rsb_todo_unfinished_msg=Shall introduce overflow check."
+ALIASES                += "rsb_todo_unfinished_msg=This function implementation is not complete."
+ALIASES                += "rsb_todo_unfinished_inc_msg=This function implementation is not complete."
+ALIASES                += "rsb_warn_untested_msg=This function is not yet in the test suite." 
+ALIASES                += "rsb_warn_not_th_tested_msg=This function has not been thoroughly tested."
+ALIASES                += "rsb_note_switch_in_place=This function is only valid if \c mtxAp has been assembled in place (that is, in the arrays that are being reclaimed), so with e.g.: #rsb_mtx_alloc_from_coo_inplace(). Please also note that the matrix will get freed internally and so \c mtxAp  will not be usable in any way afterwards." 
+ALIASES                += "rsb_warn_unoptimized_msg=This function is not optimized." 
+ALIASES                += "rsb_warn_soon_to_be_deprecated_msg=This function will be deprecated soon." 
+ALIASES                += "rsb_warn_soon_to_be_updated_msg=This function shall be updated and expanded soon." 
+#ALIASES                += "rsb_warn_soon_to_be_deprecated_msg =This function may get deprecated soon." 
+ALIASES                += "rsb_value_param_msg=A pointer to the computed value." 
+ALIASES                += "rsb_note_assume_nnz_sized=Assumes all three \c VA,IA,JA arrays are at least min(\c \rsb_nnzA,\c \rsb_nrA+1,\c \rsb_ncA+1) sized. The user is expected NOT to use these arrays until the matrix has been destroyed with #rsb_mtx_free(). Then, it is possible to use these arrays again." 
+ALIASES                += "rsb_mtx_alloc_coo_inplace_msg=Given as input COO arrays \c \rsb_va_ia_ja_decl, allocates and assembles an RSB matrix reusing input arrays."
+ALIASES                += "rsb_mtx_alloc_csr_inplace_msg=Given as input CSR arrays \c \rsb_va_rp_ja_decl , allocates and assembles an RSB matrix reusing input arrays."
+ALIASES                += "rsb_ret_null=Always \c NULL." 
+ALIASES                += "rsb_spsv_no_zero=If \c --enable-zero-division-checks-on-solve  was specified at configure time, attempts to solve a triangular matrix with zeroes on a diagonal will fail." 
+ALIASES                += "rsb_configure_memwrap=Only works if the memory wrapper (\c --enable-allocator-wrapper) has been specified at configure time."
+#
+ALIASES                += "see_lib_spmx=\see rsb_spmv, rsb_spmm, rsb_tune_spmm"
+ALIASES                += "see_lib_spsx=\see rsb_spsm, rsb_spsv, rsb_tune_spsm" 
+ALIASES                += "rsb_iof_macros=#RSB_REINIT_SINGLE_VALUE_GET, #RSB_REINIT_SINGLE_VALUE_SET, #RSB_REINIT_SINGLE_VALUE, #RSB_REINIT_SINGLE_VALUE_C_IOP"
+ALIASES                += "rsb_iof_param_msg=\param iof library options flags. See #rsb_opt_t for a list of valid options."
+ALIASES                += "rsb_iop_inp_param_msg=\param iop library options value input (read only) pointer." 
+ALIASES                += "rsb_iop_out_param_msg=\param iop library options value output pointer (pointed location will be updated)." 
+#ALIASES                += "rsb_iof_see=For usage with \see_lib_init_funcs or (deprecated) macros \rsb_iof_macros."
+ALIASES                += "see_lib_init_funcs=#rsb_lib_init, #rsb_lib_set_opt_str, #rsb_lib_reinit, #rsb_lib_exit, #rsb_lib_get_opt, #rsb_lib_set_opt, or (deprecated) macros \rsb_iof_macros." 
+ALIASES                += "see_lib_init=\see \see_lib_init_funcs." 
+ALIASES                += "rsb_lib_alloc_in_place=#rsb_mtx_alloc_from_coo_inplace,#rsb_mtx_alloc_from_csr_inplace"
+ALIASES                += "see_lib_alloc=\see rsb_mtx_alloc_from_coo_const, rsb_mtx_alloc_from_coo_inplace, rsb_mtx_free, rsb_mtx_clone, rsb_mtx_alloc_from_csr_const, rsb_mtx_alloc_from_csc_const, rsb_mtx_alloc_from_csr_inplace, rsb_mtx_switch_to_csr, rsb_mtx_alloc_from_coo_begin, rsb_mtx_alloc_from_coo_end" 
+ALIASES                += "see_lib_get=\see rsb_mtx_get_coo, rsb_mtx_get_csr, rsb_mtx_get_rows_sparse, rsb_mtx_get_coo_block, rsb_mtx_get_prec, rsb_mtx_get_nrm, rsb_mtx_get_vec, rsb_file_mtx_get_dims, rsb_mtx_get_vals"
+ALIASES                += "see_lib_set=\see rsb_mtx_upd_vals, rsb_mtx_set_vals"
+ALIASES                += "see_lib_conv=\see rsb_mtx_switch_to_coo,rsb_mtx_switch_to_coo"
+#ALIASES                += "rsb_version_12="
+ALIASES                += "rsb_version_12=\note Introduced in librsb-1.2."
+ALIASES                += "see_lib_gemm=\see rsb_spmsp_to_dense, rsb_sppsp, rsb_spmsp, rsb_mtx_add_to_dense"
+ALIASES                += "see_lib_rndr=\see rsb_mtx_rndr, rsb_file_mtx_rndr"
+ALIASES                += "see_lib_info=\see rsb_mtx_get_info, rsb_mtx_get_info_str, rsb_file_mtx_save, rsb_file_vec_load, rsb_file_mtx_load"
+ALIASES                += "see_lib_util=\see rsb_time, rsb_coo_sort"
+ALIASES                += "see_lib_error=\see rsb_perror, rsb_strerror_r"
+ALIASES                += "see_lib_psblas=\see rsb_psblas_trans_to_rsb_trans"
+#
+ALIASES                += "see_readme=See the main README documentation file about build time configuration."
+ALIASES                += "see_rsb_BLAS_get_mtx_msg=\see_lib_get, \see_lib_set, \see_lib_gemm, \see_lib_rndr, \see_lib_info."
+ALIASES                += "rsb_give_me_feedback=Consider contacting the author if you intend to use it." 
+#
+OPTIMIZE_OUTPUT_FOR_C  = YES
+OPTIMIZE_OUTPUT_JAVA   = NO
+BUILTIN_STL_SUPPORT    = NO
+CPP_CLI_SUPPORT        = NO
+SIP_SUPPORT            = NO
+DISTRIBUTE_GROUP_DOC   = NO
+SUBGROUPING            = YES
+TYPEDEF_HIDES_STRUCT   = NO
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = NO
+EXTRACT_ANON_NSPACES   = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_IN_BODY_DOCS      = NO
+INTERNAL_DOCS          = NO
+CASE_SENSE_NAMES       = YES
+HIDE_SCOPE_NAMES       = NO
+SHOW_INCLUDE_FILES     = NO
+INLINE_INFO            = YES
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = NO
+SORT_BY_SCOPE_NAME     = NO
+GENERATE_TODOLIST      = YES
+GENERATE_TESTLIST      = YES
+GENERATE_BUGLIST       = YES
+GENERATE_DEPRECATEDLIST= YES
+ENABLED_SECTIONS       = USERDOC 
+#ENABLED_SECTIONS       = USERDOC,INNERDOC
+MAX_INITIALIZER_LINES  = 30
+SHOW_USED_FILES        = YES
+#SHOW_DIRECTORIES       = NO # 20131112 Now obsolete
+FILE_VERSION_FILTER    = 
+#---------------------------------------------------------------------------
+# configuration options related to warning and progress messages
+#---------------------------------------------------------------------------
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_FORMAT            = "$file:$line: $text"
+WARN_LOGFILE           = 
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+# INPUT                  = ../
+INPUT                  = ../blas_sparse.h ../rsb.h ../rsb.F90 ../rsb_libspblas.c ../rsb_libspblas.h ../rsb_rsb.c ../rsb_types.h  ../rsb_blas_sparse.F90 ../rsb_libspblas_handle.c
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS          = *.c \
+                         *.cpp \
+                         *.c++ \
+                         *.F90 \
+                         *.F03 \
+                         *.h
+RECURSIVE              = NO
+# WARNING: to me, it seems that the following does not work!
+EXCLUDE                = .svn doc bench plots autom4te.cache scripts obsolete obsolete-moved junk ./rsb-librsb-internals.h
+EXCLUDE_SYMLINKS       = NO
+#EXCLUDE_PATTERNS       = *rsb-types.h* .svn .libs .deps *.m4 *.m *.R *.sh
+EXCLUDE_PATTERNS       = types.h .svn .libs .deps *.m4 *.m *.R *.sh config.h rsb-config.h rsb_wrecks.c
+EXCLUDE_SYMBOLS        = 
+#EXAMPLE_PATH           = ../examples
+EXAMPLE_PATH           = ../ ../examples
+EXAMPLE_PATTERNS       = 
+EXAMPLE_RECURSIVE      = NO
+IMAGE_PATH             = 
+INPUT_FILTER           = 
+FILTER_PATTERNS        = 
+FILTER_SOURCE_FILES    = NO
+#---------------------------------------------------------------------------
+# configuration options related to source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = NO
+REFERENCED_BY_RELATION = NO
+REFERENCES_RELATION    = NO
+REFERENCES_LINK_SOURCE = NO
+USE_HTAGS              = NO
+VERBATIM_HEADERS       = NO
+#---------------------------------------------------------------------------
+# configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+ALPHABETICAL_INDEX     = NO
+COLS_IN_ALPHA_INDEX    = 5
+IGNORE_PREFIX          = 
+#---------------------------------------------------------------------------
+# configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = 
+HTML_FOOTER            = 
+HTML_STYLESHEET        = 
+#HTML_ALIGN_MEMBERS     = YES # 20131112 Now obsolete
+GENERATE_HTMLHELP      = NO
+HTML_DYNAMIC_SECTIONS  = NO
+CHM_FILE               = 
+HHC_LOCATION           = 
+GENERATE_CHI           = NO
+BINARY_TOC             = NO
+TOC_EXPAND             = NO
+DISABLE_INDEX          = NO
+ENUM_VALUES_PER_LINE   = 4
+GENERATE_TREEVIEW      = NO
+TREEVIEW_WIDTH         = 250
+HTML_DYNAMIC_SECTIONS = NO
+#---------------------------------------------------------------------------
+# configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+GENERATE_LATEX         = NO
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = NO
+PAPER_TYPE             = a4wide
+EXTRA_PACKAGES         = 
+LATEX_HEADER           = 
+PDF_HYPERLINKS         = NO
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = NO
+LATEX_HIDE_INDICES     = NO
+#---------------------------------------------------------------------------
+# configuration options related to the RTF output
+#---------------------------------------------------------------------------
+GENERATE_RTF           = NO
+RTF_OUTPUT             = rtf
+COMPACT_RTF            = NO
+RTF_HYPERLINKS         = NO
+RTF_STYLESHEET_FILE    = 
+RTF_EXTENSIONS_FILE    = 
+#---------------------------------------------------------------------------
+# configuration options related to the man page output
+#---------------------------------------------------------------------------
+GENERATE_MAN           = YES
+MAN_OUTPUT             = man
+MAN_EXTENSION          = .3
+MAN_LINKS              = YES
+#---------------------------------------------------------------------------
+# configuration options related to the XML output
+#---------------------------------------------------------------------------
+GENERATE_XML           = NO
+XML_OUTPUT             = xml
+XML_SCHEMA             = 
+XML_DTD                = 
+XML_PROGRAMLISTING     = YES
+#---------------------------------------------------------------------------
+# configuration options for the AutoGen Definitions output
+#---------------------------------------------------------------------------
+GENERATE_AUTOGEN_DEF   = NO
+#---------------------------------------------------------------------------
+# configuration options related to the Perl module output
+#---------------------------------------------------------------------------
+GENERATE_PERLMOD       = NO
+PERLMOD_LATEX          = NO
+PERLMOD_PRETTY         = YES
+PERLMOD_MAKEVAR_PREFIX = 
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor   
+#---------------------------------------------------------------------------
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = NO
+EXPAND_ONLY_PREDEF     = NO
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = 
+#INCLUDE_PATH           = rsb-config.h
+INCLUDE_FILE_PATTERNS  = 
+# FIXME 20130109 the following is a workaround:
+PREDEFINED             = RSB_HAVE_CONFIG_H=1 RSB_WITH_SPARSE_BLAS_INTERFACE=1
+# PREDEFINED             = 
+EXPAND_AS_DEFINED      = 
+SKIP_FUNCTION_MACROS   = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to external references   
+#---------------------------------------------------------------------------
+TAGFILES               = 
+GENERATE_TAGFILE       = 
+ALLEXTERNALS           = NO
+EXTERNAL_GROUPS        = NO
+PERL_PATH              = /usr/bin/perl
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool   
+#---------------------------------------------------------------------------
+CLASS_DIAGRAMS         = NO
+MSCGEN_PATH            = 
+HIDE_UNDOC_RELATIONS   = YES
+#HAVE_DOT               = YES
+HAVE_DOT               = NO
+#CLASS_GRAPH            = YES
+CLASS_GRAPH            = NO
+#COLLABORATION_GRAPH    = YES
+COLLABORATION_GRAPH    = NO
+#GROUP_GRAPHS           = YES
+GROUP_GRAPHS           = NO
+UML_LOOK               = NO
+TEMPLATE_RELATIONS     = NO
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+#CALL_GRAPH             = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+DOT_IMAGE_FORMAT       = png
+DOT_PATH               = 
+DOTFILE_DIRS           = 
+DOT_GRAPH_MAX_NODES    = 50
+MAX_DOT_GRAPH_DEPTH    = 1000
+DOT_TRANSPARENT        = YES
+DOT_MULTI_TARGETS      = NO
+GENERATE_LEGEND        = YES
+DOT_CLEANUP            = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to the search engine   
+#---------------------------------------------------------------------------
+SEARCHENGINE           = NO

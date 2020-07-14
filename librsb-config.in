@@ -1,0 +1,154 @@
+#! /bin/sh
+
+# librsb-config
+# provides configuration info for librsb.
+
+# Copyright (C) 2010-2016 Michele Martone
+# Modeled after libpng-config, Copyright (C) 2002, 2004, 2006, 2007 Glenn Randers-Pehrson
+
+version="@LIBRSB_MAIN_RELEASE@ "
+prefix="@prefix@"
+exec_prefix="@exec_prefix@"
+libdir="@libdir@"
+cc="@CC@"
+fc="@FC@"
+cxx="@CXX@"
+#includedir="@includedir@/librsb@LIBRSB_MAJOR@@LIBRSB_MINOR@"
+#includedir="@includedir@/@LIBRSB_MAJOR@@LIBRSB_MINOR@"
+includedir="@includedir@/"
+#libs="-lrsb@LIBRSB_MAJOR@@LIBRSB_MINOR@"
+libs="-lrsb "
+#all_libs="-lrsb@LIBRSB_MAJOR@@LIBRSB_MINOR@ @LIBS@"
+#all_libs="-lrsb @LIBS@"
+extra_libs="@LIBS@ @OPENMP_FCFLAGS@ "
+all_libs="-lrsb "
+I_opts="-I${includedir} "
+L_opts="-L${libdir} "
+R_opts="-Wl,-rpath -Wl,${libdir} "
+cppflags=""
+ccopts=""
+ldopts=""
+
+usage()
+{
+    cat <<EOF
+Usage: $0 [OPTION] ...
+
+Known values for OPTION are:
+
+  --prefix        print librsb prefix
+  --libdir        print path to directory containing library
+  --libs          print library linking information
+  --extra_libs    print extra linking information (e.g.: dependency libs)
+  --ccopts        print compiler options
+  --cc            print C compiler
+  --fc            print Fortran compiler
+  --cxx           print C++ compiler
+  --cppflags      print pre-processor flags
+  --cflags        print preprocessor flags, I_opts, and compiler options
+  --I_opts        print "-I" include options
+  --L_opts        print linker "-L" flags for dynamic linking
+  --R_opts        print dynamic linker "-R" or "-rpath" flags
+  --ldopts        print linker options
+  --ldflags       print linker flags (ldopts, L_opts, R_opts, and libs)
+  --static        revise subsequent outputs for static linking
+  --help          print this help and exit
+  --version       print version information
+EOF
+
+    exit $1
+}
+
+if test $# -eq 0; then
+    usage 1
+fi
+
+while test $# -gt 0; do
+    case "$1" in
+
+    --prefix)
+        echo -n ${prefix}
+        ;;
+
+    --version)
+        echo -n ${version}
+        exit 0
+        ;;
+
+    --help)
+        usage 0
+        ;;
+
+    --ccopts)
+        echo -n ${ccopts}
+        ;;
+
+    --cc)
+        echo -n ${cc}
+        ;;
+
+    --fc)
+        echo -n ${fc}
+        ;;
+
+    --cxx)
+        echo -n ${cxx}
+        ;;
+
+    --cppflags)
+        echo -n ${cppflags}
+        ;;
+
+    --cflags)
+        echo -n ${I_opts} ${cppflags} ${ccopts}
+        ;;
+
+    --libdir)
+        echo -n ${libdir}
+        ;;
+
+    --libs)
+        echo -n ${libs}
+        ;;
+
+    --extra_libs)
+        echo -n ${extra_libs}
+        ;;
+
+    --I_opts)
+        echo -n ${I_opts}
+        ;;
+
+    --L_opts)
+        echo -n ${L_opts}
+        ;;
+
+    --R_opts)
+        echo -n ${R_opts}
+        ;;
+
+    --ldopts)
+    	echo -n ${ldopts}
+	;;
+
+    --ldflags)
+        echo -n ${ldopts} ${L_opts} ${R_opts} ${libs}
+        ;;
+
+    --static)
+        R_opts=""
+	all_libs="${libdir}/librsb.a"
+	libs=${all_libs}
+        ;;
+
+    *)
+        usage
+        exit 1
+        ;;
+    esac
+    if test $# -gt 1; then echo -n \  ; fi
+    shift
+done
+echo
+
+exit 0
